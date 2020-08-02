@@ -15,10 +15,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 <div id="show-section" class="container-fluid show-edit-visible">
     <div class="row page-header-buttons">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <a href="<?= $back_url ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
             <a href="#" class="btn btn-info btn-fill show-edit-toggler"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Edit</a>
         </div>
+		<div class="col-md-6 text-right">
+			<?php
+			$prev_lead_url = !empty($prev_lead->id) ? base_url('lead/' . $prev_lead->id) : 'javascript:;';
+			$prev_lead_class = !empty($prev_lead->id) ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill';
+			$next_lead_url = !empty($next_lead->id) ? base_url('lead/' . $next_lead->id) : 'javascript:;';
+			$next_lead_class = !empty($next_lead->id) ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill';
+			?>
+			<a href="<?= $prev_lead_url ?>" class="<?php echo $prev_lead_class ?>"><i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp; Prev Lead</a>
+			<a href="<?= $next_lead_url ?>" class="<?php echo $next_lead_class ?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp; Next Lead</a>
+		</div>
     </div>
     <div class="row">
         <div class="col-md-8">

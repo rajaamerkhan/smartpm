@@ -47,6 +47,8 @@ class Leads extends CI_Controller
 		authAccess();
 
 		$subtitle = LeadModel::statusToStr($status);
+		$next_status = is_string(LeadModel::statusToStr($status + 1)) ? $status + 1 : false;
+		$prev_status = is_string(LeadModel::statusToStr($status - 1)) ? $status - 1 : false;
 		$leads = $this->lead->allLeadsByStatus($status);
 		//echo '<pre>',print_r(LeadModel::statusToStr($status),true);exit;
 
@@ -54,6 +56,8 @@ class Leads extends CI_Controller
 		$this->load->view('leads/index', [
 			'leads' => $leads,
 			'subtitle' => $subtitle,
+			'next_status' => $next_status,
+			'prev_status' => $prev_status,
 		]);
 		$this->load->view('footer');
 	}
@@ -359,6 +363,8 @@ class Leads extends CI_Controller
 		if ($lead) {
 			$back_url = base_url('leads');
 			if(isset($lead->status)) $back_url = base_url('leads/status/' . $lead->status);
+			$next_lead = $this->lead->getNextLeadAfterId($lead->status, $lead->id);
+			$prev_lead = $this->lead->getPreviousLeadAfterId($lead->status, $lead->id);
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = false;
@@ -402,6 +408,8 @@ class Leads extends CI_Controller
 				'items' => $items,
 				'vendors' => $vendors,
 				'materials' => $materials,
+				'next_lead' => $next_lead,
+				'prev_lead' => $prev_lead,
 				'back_url' => $back_url,
 			]);
 			$this->load->view('footer');

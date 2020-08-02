@@ -3,8 +3,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 //echo '<pre>',print_r($this,true);exit;
 ?><div class="container-fluid">
 	<div class="row page-header-buttons">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<a href="<?= base_url('lead/create?lead_status=' . $this->uri->segment('3')) ?>" class="btn btn-info btn-fill">Create <?php echo isset($subtitle) ? $subtitle : $title; ?></a>
+		</div>
+		<div class="col-md-6 text-right">
+			<?php
+			$prev_status_url = $prev_status !== false ? base_url('leads/status/' . $prev_status) : 'javascript:;';
+			$prev_status_class = $prev_status !== false ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill';
+			$next_status_url = $next_status !== false ? base_url('leads/status/' . $next_status) : 'javascript:;';
+			$next_status_class = $next_status !== false ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill';
+			?>
+			<a href="<?= $prev_status_url ?>" class="<?php echo $prev_status_class ?>"><i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp; Prev Status</a>
+			<a href="<?= $next_status_url ?>" class="<?php echo $next_status_class ?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp; Next Status</a>
 		</div>
 	</div>
 	<div class="row">
