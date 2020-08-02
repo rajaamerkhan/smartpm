@@ -357,6 +357,8 @@ class Leads extends CI_Controller
 
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
+			$back_url = base_url('leads');
+			if(isset($lead->status)) $back_url = base_url('leads/status/' . $lead->status);
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = false;
@@ -399,7 +401,8 @@ class Leads extends CI_Controller
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,
-				'materials' => $materials
+				'materials' => $materials,
+				'back_url' => $back_url,
 			]);
 			$this->load->view('footer');
 		} else {
