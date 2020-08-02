@@ -46,10 +46,14 @@ class Leads extends CI_Controller
 	{
 		authAccess();
 
+		$subtitle = LeadModel::statusToStr($status);
 		$leads = $this->lead->allLeadsByStatus($status);
+		//echo '<pre>',print_r(LeadModel::statusToStr($status),true);exit;
+
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/index', [
-			'leads' => $leads
+			'leads' => $leads,
+			'subtitle' => $subtitle,
 		]);
 		$this->load->view('footer');
 	}
@@ -58,6 +62,8 @@ class Leads extends CI_Controller
 	{
 		authAccess();
 
+		$back_url  = base_url('leads');
+		if($this->input->get('lead_status') !== false) $back_url = base_url('leads/status/' . $this->input->get('lead_status'));
 		$job_type_tags = LeadModel::getType();
 		$lead_status_tags = LeadModel::getStatus();
 		$lead_category_tags = LeadModel::getCategory();
@@ -70,7 +76,8 @@ class Leads extends CI_Controller
 			'lead_status_tags' => $lead_status_tags,
 			'lead_category_tags' => $lead_category_tags,
 			'leadSources' => $clientLeadSource,
-			'classification' => $classification
+			'classification' => $classification,
+			'back_url' => $back_url,
 		]);
 		$this->load->view('footer');
 	}

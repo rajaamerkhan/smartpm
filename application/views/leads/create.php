@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
+            <a href="<?= $back_url; ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
         </div>
     </div>
     <div class="row">
@@ -165,28 +165,52 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <h4 class="title" style="float: left;">Contract Status<span class="red-mark">*</span></h4>
                                 <div class="clearfix"></div>
                                 <div>
+									<?php
+									$lead_statuses = [
+											0 => 'New',
+											1 => 'Appointment Scheduled',
+											2 => 'Needs Follow Up Call',
+											3 => 'Needs Site Visit',
+											4 => 'Needs Estimate / Bid',
+									];
+
+									$prospect_statuses = [
+											5 => 'Estimate Sent',
+											6 => 'Ready to Sign / Verbal Go',
+											12 => 'Cold',
+											13 => 'Postponed',
+											14 => 'Dead / Lost',
+									];
+
+									$prospect2_statuses = [
+											7 => 'Signed',
+											8 => 'In Production',
+											9 => 'Completed',
+											10 => 'Closed',
+											11 => 'Archive',
+									];
+
+
+									?>
                                     <select class="form-control" id="lead" name="status">
                                         <option value="" disabled selected>Select Contract Status</option>
                                         <optgroup label="Leads">
-                                            <option value="0">New</option>
-                                            <option value="1">Appointment Scheduled</option>
-                                            <option value="2">Needs Follow Up Call</option>
-                                            <option value="3">Needs Site Visit</option>
-                                            <option value="4">Needs Estimate / Bid</option>
+											<?php foreach($lead_statuses as $status_index => $status_value):?>
+												<?php $selected = $this->input->get('lead_status') == $status_index ? ' selected="selected"' : ''; ?>
+												<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
+											<?php endforeach; ?>
                                         </optgroup>
                                         <optgroup label="Prospects">
-                                            <option value="5">Estimate Sent</option>
-                                            <option value="6">Ready to Sign / Verbal Go</option>
-                                            <option value="12">Cold</option>
-                                            <option value="13">Postponed</option>
-                                            <option value="14">Dead / Lost</option>
+											<?php foreach($prospect_statuses as $status_index => $status_value):?>
+												<?php $selected = $this->input->get('lead_status') == $status_index ? ' selected="selected"' : ''; ?>
+												<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
+											<?php endforeach; ?>
                                         </optgroup>
                                         <optgroup label="Prospects">
-                                            <option value="7">Signed</option>
-                                            <option value="8">In Production</option>
-                                            <option value="9">Completed</option>
-                                            <option value="10">Closed</option>
-                                            <option value="11">Archive</option>
+											<?php foreach($prospect2_statuses as $status_index => $status_value):?>
+												<?php $selected = $this->input->get('lead_status') == $status_index ? ' selected="selected"' : ''; ?>
+												<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
+											<?php endforeach; ?>
                                         </optgroup>
                                     </select>
                                 </div>

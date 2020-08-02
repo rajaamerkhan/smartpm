@@ -1,9 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+//echo '<pre>',print_r($this,true);exit;
 ?><div class="container-fluid">
 	<div class="row page-header-buttons">
 		<div class="col-md-12">
-			<a href="<?= base_url('lead/create') ?>" class="btn btn-info btn-fill">New Lead / Client</a>
+			<a href="<?= base_url('lead/create?lead_status=' . $this->uri->segment('3')) ?>" class="btn btn-info btn-fill">Create <?php echo isset($subtitle) ? $subtitle : $title; ?></a>
 		</div>
 	</div>
 	<div class="row">
@@ -21,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="col-md-12">
 			<div class="card">
 				<div class="header">
-					<h4 class="title">Leads / Clients List</h4>
+					<h4 class="title"><?php echo isset($subtitle) ? $subtitle : $title; ?></h4>
 				</div>
 				<div class="content table-responsive table-full-width">
 					<table class="table table-hover table-striped">
