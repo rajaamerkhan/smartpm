@@ -146,6 +146,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= $lead->classification_name ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
+					<h4 class="title" style="float: left;">Sales Rep</h4>
+					<span class="status" title="<?php echo !empty($sales_rep->email_id) ? $sales_rep->email_id : '' ?>">
+						<?php if(!empty($sales_rep)): ?>
+						<?php echo "{$sales_rep->first_name} {$sales_rep->last_name}"; ?>
+						<?php else: ?>
+						X
+						<?php endif; ?>
+					</span>
+					<div class="clearfix" style="padding: 10px;"></div>
+
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -459,6 +469,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <option value="<?= $clsf->id ?>" <?= ((!empty($lead->classification)) && $clsf->id == $lead->classification) ? 'selected' : '' ?>><?= $clsf->name ?></option>
                             <?php endforeach; ?>
                         </select>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Sales Rep</h4>
+                    <span class="status">
+                        <?php echo !empty($sales_rep) ? "{$sales_rep->first_name} {$sales_rep->last_name}" : ''; ?>
+                    </span>
+                    <div class="clearfix"></div>
+                    <div class="content">
+						<div class="row">
+							<div class="col-md-12">
+							<select class="form-control lead-status" id="sales_rep_id" name="sales_rep_id" style="width: 100%;">
+								<?php if(!empty($sales_rep)): ?>
+								<option value="<?php echo $sales_rep->id ?>"><?php echo "{$sales_rep->first_name} {$sales_rep->last_name} &lt;{$sales_rep->email_id}&gt;"; ?></option>
+								<?php endif; ?>
+							</select>
+							</div>
+							<div class="clearfix"></div>
+						</div>
                     </div>
                     <div class="clearfix" style="padding: 10px;"></div>
                     <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>

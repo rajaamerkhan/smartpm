@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-?><div class="container-fluid">
+?>
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <?php
@@ -265,10 +266,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <div class="clearfix" style="padding: 10px;"></div>
                             </div>
                         </div>
                     </div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<div>
+								<label for="sales_rep_id"><h4 class="title" style="float: left;">Sales Rep</h4></label>
+								<div class="clearfix"></div>
+								<div>
+									<select class="form-control lead-status" id="sales_rep_id" name="sales_rep_id">
+									</select>
+								</div>
+								<div class="clearfix" style="padding: 10px;"></div>
+							</div>
+						</div>
+					</div>
 
                     <div class="row">
                         <div class="col-md-12">

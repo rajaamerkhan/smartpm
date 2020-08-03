@@ -110,4 +110,31 @@ class Search extends CI_Controller
             ]);
         }
     }
+
+    public function sales_rep()
+    {
+        // authAccess();
+
+        $this->form_validation->set_rules('term', 'Search Term', 'trim|required');
+		$results = [];
+
+        if ($this->form_validation->run() == TRUE) {
+            $posts = $this->input->post();
+
+            $search = $posts['term'];
+            $keywords = [];
+            foreach (explode(' ', $search) as $k) {
+                if ($k) {
+                    $keywords[] = $k;
+                }
+            }
+
+            $results = $this->user->search_sales_rep($keywords);
+        }
+
+		echo json_encode([
+			'results' => $results,
+			'pagination' => false,
+		]);
+    }
 }

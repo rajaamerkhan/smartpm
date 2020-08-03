@@ -109,6 +109,7 @@ class Leads extends CI_Controller
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
+			$sales_rep_id = !empty($posts['sales_rep_id']) ? (int)$posts['sales_rep_id'] : null;
 			$insert = $this->lead->insert([
 				'firstname' => $posts['firstname'],
 				'lastname' => $posts['lastname'],
@@ -125,6 +126,7 @@ class Leads extends CI_Controller
 				'category' => $posts['category'],
 				'type' => $posts['type'],
 				'classification' => $posts['classification'],
+				'sales_rep_id' => $sales_rep_id,
 				'entry_date' => date('Y-m-d h:i:s')
 			]);
 
@@ -258,6 +260,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('materials_status', 'Materials', 'trim|numeric');
 		$this->form_validation->set_rules('labor_status', 'Labor', 'trim|numeric');
 		$this->form_validation->set_rules('permit_status', 'Permit', 'trim|numeric');
+		$this->form_validation->set_rules('sales_rep_id', 'Sales Rep', 'trim|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$_lead = $this->lead->getLeadById($id);
@@ -266,8 +269,10 @@ class Leads extends CI_Controller
 				'status' => $posts['status'],
 				'category' => $posts['category'],
 				'type' => $posts['type'],
-				'classification' => $posts['classification']
+				'classification' => $posts['classification'],
+				'sales_rep_id' => !empty($posts['sales_rep_id']) ? (int)$posts['sales_rep_id'] : null,
 			];
+
 			if ($_lead->status === '8') {
 				$updateData['dumpster_status'] = $posts['dumpster_status'];
 				$updateData['materials_status'] = $posts['materials_status'];
@@ -389,6 +394,12 @@ class Leads extends CI_Controller
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
 
+			$sales_rep = false;
+			if(!empty($lead->sales_rep_id)) {
+				$sales_rep = $this->user->getUserById($lead->sales_rep_id);
+			}
+
+
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('leads/show', [
 				'lead' => $lead,
@@ -408,6 +419,7 @@ class Leads extends CI_Controller
 				'items' => $items,
 				'vendors' => $vendors,
 				'materials' => $materials,
+				'sales_rep' => $sales_rep,
 				'next_lead' => $next_lead,
 				'prev_lead' => $prev_lead,
 				'back_url' => $back_url,

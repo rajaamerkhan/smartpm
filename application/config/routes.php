@@ -363,5 +363,6 @@ $route['setting/user-options/cell-notif-suffix/(:num)/delete']['post'] = 'userOp
 $route['search/leads']['post'] = 'search/leads';
 $route['search/tasks']['post'] = 'search/tasks';
 $route['search/users']['post'] = 'search/users';
+$route['search/sales_rep']['post'] = 'search/sales_rep';
 
 $route['(.+)'] = 'errors/page_missing';

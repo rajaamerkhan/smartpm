@@ -65,3 +65,15 @@ form.addEventListener("submit", function (e) {
         displayValidationError(errors);
     }
 });
+$('#sales_rep_id').select2({
+	allowClear: true,
+	placeholder: "Search Sales Rep",
+	minimumInputLength: 3,
+	ajax: {
+		url: '/search/sales_rep',
+		type: 'POST',
+		delay: 250,
+		dataType: 'json'
+		// Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+	}
+});
