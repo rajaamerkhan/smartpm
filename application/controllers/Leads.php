@@ -143,6 +143,14 @@ class Leads extends CI_Controller
 					'email' => $posts['ap_email'],
 					'phone' => $posts['ap_phone']
 				]);
+
+				// send notification to sales rep
+				if(!empty($sales_rep_id)) {
+					$sales_rep = $this->user->getUserById($sales_rep_id);
+					$this->notify = new Notify();
+					$this->notify->sendLeadAssignNotification($sales_rep->email_id, $insert, "{$posts['firstname']} {$posts['lastname']}", base_url("lead/{$insert}"));
+				}
+
 				redirect('lead/' . $insert);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Create Lead.</p>');
@@ -349,6 +357,14 @@ class Leads extends CI_Controller
 				} else {
 					$sub_base_path = '';
 				}
+
+				// send notification to sales rep - if new rep is assigned
+				if(!empty($posts['sales_rep_id']) && strcmp($posts['sales_rep_id'], $_lead->sales_rep_id) !== 0) {
+					$sales_rep = $this->user->getUserById($posts['sales_rep_id']);
+					$this->notify = new Notify();
+					$this->notify->sendLeadAssignNotification($sales_rep->email_id, $lead->id, "{$lead->firstname} {$lead->lastname}", base_url("lead/{$lead->id}"));
+				}
+
 				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');

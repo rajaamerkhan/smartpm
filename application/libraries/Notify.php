@@ -158,6 +158,20 @@ class Notify
         $this->CI->email->send();
     }
 
+    public function sendLeadAssignNotification($email, $lead_id, $lead_name, $link)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject("You have a new Lead: {$lead_name}");
+        $html_message = $this->CI->load->view('template/email/lead-assign-notification.php', [
+            'logoUrl' => $this->logoUrl,
+            'lead_id' => $lead_id,
+            'lead_name' => $lead_name,
+            'link' => $link,
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
+
     public function sendWelcomeUserNotification($email, $name, $logoUrl = false)
     {
         $this->CI->email->to($email);
