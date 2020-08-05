@@ -359,7 +359,7 @@ class Leads extends CI_Controller
 				}
 
 				// send notification to sales rep - if new rep is assigned
-				if(!empty($posts['sales_rep_id']) && strcmp($posts['sales_rep_id'], $_lead->sales_rep_id) !== 0) {
+				if(!empty($posts['sales_rep_id']) && (empty($_lead->sales_rep_id) || strcmp($posts['sales_rep_id'], $_lead->sales_rep_id) !== 0)) {
 					$sales_rep = $this->user->getUserById($posts['sales_rep_id']);
 					$this->notify = new Notify();
 					$this->notify->sendLeadAssignNotification($sales_rep->email_id, $lead->id, "{$lead->firstname} {$lead->lastname}", base_url("lead/{$lead->id}"));
