@@ -4,9 +4,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
 	<div class="row page-header-buttons">
 		<div class="col-md-6">
-			<a href="<?= base_url('lead/create?lead_status=' . $this->uri->segment('3')) ?>" class="btn btn-info btn-fill">Create <?php echo isset($subtitle) ? $subtitle : $title; ?></a>
+			<?php if($this->uri->segment(3) == 0): ?>
+				<a href="<?= base_url('lead/create?lead_status=' . $this->uri->segment('3')) ?>" class="btn btn-info btn-fill">Create <?php echo isset($subtitle) ? $subtitle : $title; ?></a>
+			<?php endif; ?>
 		</div>
-		<div class="col-md-6 text-right">
+		<div class="col-md-6 text-right-not-xs">
 			<?php if(isset($prev_status) && isset($next_status)): ?>
 				<?php
 				$prev_status_url = $prev_status !== false ? base_url('leads/status/' . $prev_status) : 'javascript:;';
