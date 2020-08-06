@@ -13,8 +13,9 @@
 	"require": {
 		"php": ">=5.3.7",
 		"vlucas/phpdotenv": "^3.4",
-		"twilio/sdk": "5.0"
-	},
+		"twilio/sdk": "5.0",
+      "ext-exif": "*"
+    },
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
 	},

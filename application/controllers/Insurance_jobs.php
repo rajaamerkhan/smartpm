@@ -9,7 +9,7 @@ class Insurance_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'FinancialModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel']);
+		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'FinancialModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel', 'UserModel']);
 		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
@@ -24,6 +24,7 @@ class Insurance_jobs extends CI_Controller
 		$this->vendor = new VendorModel();
 		$this->item = new ItemModel();
 		$this->lead_material = new LeadMaterialModel();
+		$this->user = new UserModel();
 	}
 
 	public function index()
@@ -44,6 +45,8 @@ class Insurance_jobs extends CI_Controller
 
 		$job = $this->lead->getLeadById($jobid);
 		if ($job) {
+			$next_lead = $this->lead->getNextLeadAfterId($job->status, $job->id, $job->category);
+			$prev_lead = $this->lead->getPreviousLeadAfterId($job->status, $job->id, $job->category);
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = $this->team_job_track->getTeamName($jobid);
@@ -64,6 +67,11 @@ class Insurance_jobs extends CI_Controller
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
 
+			$sales_rep = false;
+			if(!empty($job->sales_rep_id)) {
+				$sales_rep = $this->user->getUserById($job->sales_rep_id);
+			}
+
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('insurance_job/show', [
 				'jobid' => $jobid,
@@ -82,7 +90,10 @@ class Insurance_jobs extends CI_Controller
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,
-				'materials' => $materials
+				'materials' => $materials,
+				'sales_rep' => $sales_rep,
+				'next_lead' => $next_lead,
+				'prev_lead' => $prev_lead,
 			]);
 			$this->load->view('footer');
 		} else {

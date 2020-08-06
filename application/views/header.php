@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/jquery.atwho.css') ?>">
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="<?= base_url('assets/css/demo.css?v=1.1') ?>" rel="stylesheet" />
+    <link href="<?= base_url('assets/css/demo.css?v=1.1.2') ?>" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">

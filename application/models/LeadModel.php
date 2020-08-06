@@ -232,27 +232,30 @@ class LeadModel extends CI_Model
         return $result ? $result : false;
     }
 
-    public function getNextLeadAfterId($lead_status, $lead_id)
+    public function getNextLeadAfterId($lead_status, $lead_id, $category_id=null)
     {
         $this->db->select("jobs.id");
         $this->db->where([
             'id > ' => $lead_id,
 			'status' => $lead_status,
         ]);
+        if($category_id !== null) $this->db->where(['category' => $category_id]);
         $this->db->order_by('id', 'ASC');
 		$this->db->limit(1);
         $query = $this->db->get($this->table);
+        //echo $this->db->last_query();exit;
         $result = $query->first_row();
         return $result ? $result : false;
     }
 
-    public function getPreviousLeadAfterId($lead_status, $lead_id)
+    public function getPreviousLeadAfterId($lead_status, $lead_id, $category_id=null)
     {
         $this->db->select("jobs.id");
         $this->db->where([
             'id < ' => $lead_id,
 			'status' => $lead_status,
         ]);
+		if($category_id !== null) $this->db->where(['category' => $category_id]);
         $this->db->order_by('id', 'DESC');
 		$this->db->limit(1);
         $query = $this->db->get($this->table);

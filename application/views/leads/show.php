@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <a href="<?= $back_url ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
             <a href="#" class="btn btn-info btn-fill show-edit-toggler"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Edit</a>
         </div>
-		<div class="col-md-6 text-right">
+		<div class="col-md-6 text-right-not-xs top5">
 			<?php
 			$prev_lead_url = !empty($prev_lead->id) ? base_url('lead/' . $prev_lead->id) : 'javascript:;';
 			$prev_lead_class = !empty($prev_lead->id) ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill';
@@ -147,7 +147,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
 					<h4 class="title" style="float: left;">Sales Rep</h4>
-					<span class="status" title="<?php echo !empty($sales_rep->email_id) ? $sales_rep->email_id : '' ?>">
+					<span class="status" title="<?php echo !empty($sales_rep->email_id) ? $sales_rep->email_id : 'X' ?>">
 						<?php if(!empty($sales_rep)): ?>
 						<?php echo "{$sales_rep->first_name} {$sales_rep->last_name}"; ?>
 						<?php else: ?>
