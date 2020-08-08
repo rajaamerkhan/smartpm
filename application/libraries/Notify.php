@@ -179,7 +179,7 @@ class Notify
 				$phone,
 				[
 					'from' => $this->twilio_number,
-					'body' => "Smartpm.app: # {$lead_id} {$lead_name} ({$link})",
+					'body' => "Smartpm.app: You have a new Lead: {$lead_name} - Lead # {$lead_id} ( {$link} )",
 				]
 			);
 		}
