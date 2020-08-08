@@ -172,6 +172,19 @@ class Notify
         $this->CI->email->send();
     }
 
+	public function sendLeadAssignNotificationMob($phone, $lead_id, $lead_name, $link)
+	{
+		if ($this->twilioClient) {
+			$this->twilioClient->messages->create(
+				$phone,
+				[
+					'from' => $this->twilio_number,
+					'body' => "Smartpm.app: # {$lead_id} {$lead_name} ({$link})",
+				]
+			);
+		}
+	}
+
     public function sendWelcomeUserNotification($email, $name, $logoUrl = false)
     {
         $this->CI->email->to($email);

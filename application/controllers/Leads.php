@@ -147,8 +147,24 @@ class Leads extends CI_Controller
 				// send notification to sales rep
 				if(!empty($sales_rep_id)) {
 					$sales_rep = $this->user->getUserById($sales_rep_id);
-					$this->notify = new Notify();
-					$this->notify->sendLeadAssignNotification($sales_rep->email_id, $insert, "{$posts['firstname']} {$posts['lastname']}", base_url("lead/{$insert}"));
+					if(!empty($sales_rep->notifications)) {
+						$lead_name = "{$posts['firstname']} {$posts['lastname']}";
+						$lead_url = base_url("lead/{$insert}");
+
+						if(in_array($sales_rep->notifications, [2,4])) {
+							$phoneNos = $this->user->getPhoneArrByUserIds([$sales_rep->id]);
+							foreach ($phoneNos as $phoneNo) {
+								$this->notify = new Notify();
+								$this->notify->sendLeadAssignNotificationMob($phoneNo, $insert, $lead_name, $lead_url);
+							}
+
+						}
+
+						if(in_array($sales_rep->notifications, [3,4])) {
+							$this->notify = new Notify();
+							$this->notify->sendLeadAssignNotification($sales_rep->email_id, $insert, $lead_name, $lead_url);
+						}
+					}
 				}
 
 				redirect('lead/' . $insert);
@@ -361,8 +377,24 @@ class Leads extends CI_Controller
 				// send notification to sales rep - if new rep is assigned
 				if(!empty($posts['sales_rep_id']) && (empty($_lead->sales_rep_id) || strcmp($posts['sales_rep_id'], $_lead->sales_rep_id) !== 0)) {
 					$sales_rep = $this->user->getUserById($posts['sales_rep_id']);
-					$this->notify = new Notify();
-					$this->notify->sendLeadAssignNotification($sales_rep->email_id, $lead->id, "{$lead->firstname} {$lead->lastname}", base_url("lead/{$lead->id}"));
+					if(!empty($sales_rep->notifications)) {
+						$lead_name = "{$lead->firstname} {$lead->lastname}";
+						$lead_url = base_url("lead/{$lead->id}");
+
+						if(in_array($sales_rep->notifications, [2,4])) {
+							$phoneNos = $this->user->getPhoneArrByUserIds([$sales_rep->id]);
+							foreach ($phoneNos as $phoneNo) {
+								$this->notify = new Notify();
+								$this->notify->sendLeadAssignNotificationMob($phoneNo, $lead->id, $lead_name, $lead_url);
+							}
+
+						}
+
+						if(in_array($sales_rep->notifications, [3,4])) {
+							$this->notify = new Notify();
+							$this->notify->sendLeadAssignNotification($sales_rep->email_id, $lead->id, $lead_name, $lead_url);
+						}
+					}
 				}
 
 				redirect('lead/' . $sub_base_path . $id);

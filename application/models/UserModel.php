@@ -282,7 +282,6 @@ class UserModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'level' => 5,
         ]);
         $this->db->group_start();
         foreach ($keywords as $k) {
