@@ -167,48 +167,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="clearfix"></div>
                                 <div>
 									<?php
-									$lead_statuses = [
-											0 => 'New',
-											1 => 'Appointment Scheduled',
-											2 => 'Needs Follow Up Call',
-											3 => 'Needs Site Visit',
-											4 => 'Needs Estimate / Bid',
-									];
-
-									$prospect_statuses = [
-											5 => 'Estimate Sent',
-											6 => 'Ready to Sign / Verbal Go',
-											12 => 'Cold',
-											13 => 'Postponed',
-											14 => 'Dead / Lost',
-									];
-
-									$prospect2_statuses = [
-											7 => 'Signed',
-											8 => 'In Production',
-											9 => 'Completed',
-											10 => 'Closed',
-											11 => 'Archive',
-									];
-
-
+									$lead_statuses = [0,1,2,3,4,];
+									$prospect_statuses = [5,6,12,13,14,];
+									$prospect2_statuses = [7,8,9,10,11,];
 									?>
                                     <select class="form-control" id="lead" name="status">
                                         <option value="" disabled selected>Select Contract Status</option>
                                         <optgroup label="Leads">
-											<?php foreach($lead_statuses as $status_index => $status_value):?>
+											<?php foreach($lead_statuses as $status_index): $status_value = LeadModel::statusToStr($status_index); ?>
 												<?php $selected = $this->input->get('lead_status') == $status_index ? ' selected="selected"' : ''; ?>
 												<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
 											<?php endforeach; ?>
                                         </optgroup>
                                         <optgroup label="Prospects">
-											<?php foreach($prospect_statuses as $status_index => $status_value):?>
+											<?php foreach($prospect_statuses as $status_index): $status_value = LeadModel::statusToStr($status_index); ?>
 												<?php $selected = $this->input->get('lead_status') == $status_index ? ' selected="selected"' : ''; ?>
 												<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
 											<?php endforeach; ?>
                                         </optgroup>
                                         <optgroup label="Prospects">
-											<?php foreach($prospect2_statuses as $status_index => $status_value):?>
+											<?php foreach($prospect2_statuses as $status_index): $status_value = LeadModel::statusToStr($status_index); ?>
 												<?php $selected = $this->input->get('lead_status') == $status_index ? ' selected="selected"' : ''; ?>
 												<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
 											<?php endforeach; ?>

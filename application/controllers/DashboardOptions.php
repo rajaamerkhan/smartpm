@@ -52,6 +52,14 @@ class DashboardOptions extends CI_Controller
             if (!$allUpdated) {
                 $this->session->set_flashdata('errors', '<p>Unable to Update All Box Names.</p>');
             }
+
+            // update session for custom labels
+			$box_names = [];
+			foreach ($this->dashboardBoxName->allNames() as $box_name) {
+				if(isset($box_names[$box_name->name])) continue;
+				$box_names[$box_name->name] = $box_name->label;
+			}
+			$this->session->set_userdata('box_names', $box_names);
         } else {
             $this->session->set_flashdata('errors', validation_errors());
         }

@@ -7,11 +7,12 @@ class Auth extends CI_Controller
 		parent::__construct();
 		
 		$this->load->library(['new_company', 'notify']);
-		$this->load->model(['UserModel', 'CompanyModel', 'M_CompanyModel', 'M_EmailCredModel', 'M_TwilioCredModel', 'M_DatabaseModel', 'AdminSettingModel']);
+		$this->load->model(['UserModel', 'CompanyModel', 'M_CompanyModel', 'M_EmailCredModel', 'M_TwilioCredModel', 'M_DatabaseModel', 'AdminSettingModel', 'DashboardBoxNameModel']);
 		$this->m_company = new M_CompanyModel();
 		$this->m_emailCred = new M_EmailCredModel();
 		$this->m_database = new M_DatabaseModel();
 		$this->m_twilioCred = new M_TwilioCredModel();
+		$this->dashboardBoxName = new DashboardBoxNameModel();
 	}
 
 	public function index()
@@ -67,6 +68,15 @@ class Auth extends CI_Controller
 							]);
 							$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['company_id' => $user->company_id]);
 							$this->session->set_userdata('admindata', $result1);
+
+							// set custom labels
+							$box_names = [];
+							foreach ($this->dashboardBoxName->allNames() as $box_name) {
+								if(isset($box_names[$box_name->name])) continue;
+								$box_names[$box_name->name] = $box_name->label;
+							}
+							$this->session->set_userdata('box_names', $box_names);
+
 							redirect('dashboard');
 						} else {
 							$message = '<div class="error"><p>Your account is not activated.</p></div>';

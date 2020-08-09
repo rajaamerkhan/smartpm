@@ -345,7 +345,11 @@ class LeadModel extends CI_Model
      */
     public static function statusToStr($id)
     {
-        return isset(self::$status[$id]) ? self::$status[$id] : $id;
+    	$status = $id;
+    	if(!empty(self::$status[$id])) $status = self::$status[$id];
+    	if(!empty($_SESSION['box_names'][$status])) $status = $_SESSION['box_names'][$status];
+
+        return $status;
     }
 
     public static function getStatus()

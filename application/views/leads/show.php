@@ -398,30 +398,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </span>
                     <div class="clearfix"></div>
                     <div class="content">
-                        <select class="form-control" id="lead" name="status">
-                            <option value="" disabled <?= is_null($lead->status) ? 'selected' : '' ?>>Select Contract Status</option>
-                            <optgroup label="Leads">
-                                <option value="0" <?= ("0" == $lead->status) ? 'selected' : '' ?>>New</option>
-                                <option value="1" <?= ("1" == $lead->status) ? 'selected' : '' ?>>Appointment Scheduled</option>
-                                <option value="2" <?= ("2" == $lead->status) ? 'selected' : '' ?>>Needs Follow Up Call</option>
-                                <option value="3" <?= ("3" == $lead->status) ? 'selected' : '' ?>>Needs Site Visit</option>
-                                <option value="4" <?= ("4" == $lead->status) ? 'selected' : '' ?>>Needs Estimate / Bid</option>
-                            </optgroup>
-                            <optgroup label="Prospects">
-                                <option value="5" <?= ("5" == $lead->status) ? 'selected' : '' ?>>Estimate Sent</option>
-                                <option value="6" <?= ("6" == $lead->status) ? 'selected' : '' ?>>Ready to Sign / Verbal Go</option>
-                                <option value="12" <?= ("12" == $lead->status) ? 'selected' : '' ?>>Cold</option>
-                                <option value="13" <?= ("13" == $lead->status) ? 'selected' : '' ?>>Postponed</option>
-                                <option value="14" <?= ("14" == $lead->status) ? 'selected' : '' ?>>Dead / Lost</option>
-                            </optgroup>
-                            <optgroup label="Prospects">
-                                <option value="7" <?= ("7" == $lead->status) ? 'selected' : '' ?>>Signed</option>
-                                <option value="8" <?= ("8" == $lead->status) ? 'selected' : '' ?>>In Production</option>
-                                <option value="9" <?= ("9" == $lead->status) ? 'selected' : '' ?>>Completed</option>
-                                <option value="10" <?= ("10" == $lead->status) ? 'selected' : '' ?>>Closed</option>
-                                <option value="11" <?= ("11" == $lead->status) ? 'selected' : '' ?>>Archive</option>
-                            </optgroup>
-                        </select>
+						<?php
+						$lead_statuses = [0,1,2,3,4,];
+						$prospect_statuses = [5,6,12,13,14,];
+						$prospect2_statuses = [7,8,9,10,11,];
+						?>
+						<select class="form-control" id="lead" name="status">
+							<option value="" disabled <?= is_null($lead->status) ? 'selected' : '' ?>>Select Contract Status</option>
+							<optgroup label="Leads">
+								<?php foreach($lead_statuses as $status_index): $status_value = LeadModel::statusToStr($status_index); ?>
+									<?php $selected = $lead->status == $status_index ? ' selected="selected"' : ''; ?>
+									<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
+								<?php endforeach; ?>
+							</optgroup>
+							<optgroup label="Prospects">
+								<?php foreach($prospect_statuses as $status_index): $status_value = LeadModel::statusToStr($status_index); ?>
+									<?php $selected = $lead->status == $status_index ? ' selected="selected"' : ''; ?>
+									<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
+								<?php endforeach; ?>
+							</optgroup>
+							<optgroup label="Prospects">
+								<?php foreach($prospect2_statuses as $status_index): $status_value = LeadModel::statusToStr($status_index); ?>
+									<?php $selected = $lead->status == $status_index ? ' selected="selected"' : ''; ?>
+									<option value="<?php echo $status_index ?>" <?php echo $selected ?>><?php echo $status_value ?></option>
+								<?php endforeach; ?>
+							</optgroup>
+						</select>
                     </div>
                 </div>
                 <div class="header">
