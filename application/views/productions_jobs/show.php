@@ -493,11 +493,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </span>
                     <div class="clearfix"></div>
                     <div class="content">
-						<?php
-						$lead_statuses = [0,1,2,3,4,];
-						$prospect_statuses = [5,6,12,13,14,];
-						$prospect2_statuses = [7,8,9,10,11,];
-						?>
 						<select class="form-control" id="lead" name="status">
 							<option value="" disabled <?= is_null($job->status) ? 'selected' : '' ?>>Select Contract Status</option>
 							<optgroup label="Leads">

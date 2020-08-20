@@ -113,7 +113,7 @@ class Search extends CI_Controller
 
     public function sales_rep()
     {
-        // authAccess();
+        authAccess();
 
         $this->form_validation->set_rules('term', 'Search Term', 'trim|required');
 		$results = [];

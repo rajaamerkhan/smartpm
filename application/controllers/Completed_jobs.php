@@ -64,6 +64,9 @@ class Completed_jobs extends CI_Controller
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
+			$lead_statuses = [0,1,2,3,4,];
+			$prospect_statuses = [5,6,12,13,14,];
+			$prospect2_statuses = [7,8,9,10,11,];
 
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('completed_jobs/show', [
@@ -84,7 +87,10 @@ class Completed_jobs extends CI_Controller
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,
-				'materials' => $materials
+				'materials' => $materials,
+				'lead_statuses' => $lead_statuses,
+				'prospect_statuses' => $prospect_statuses,
+				'prospect2_statuses' => $prospect2_statuses,
 			]);
 			$this->load->view('footer');
 		} else {

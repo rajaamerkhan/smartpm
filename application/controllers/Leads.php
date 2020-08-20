@@ -66,13 +66,14 @@ class Leads extends CI_Controller
 	{
 		authAccess();
 
-		$back_url  = base_url('leads');
-		if($this->input->get('lead_status') !== false) $back_url = base_url('leads/status/' . $this->input->get('lead_status'));
 		$job_type_tags = LeadModel::getType();
 		$lead_status_tags = LeadModel::getStatus();
 		$lead_category_tags = LeadModel::getCategory();
 		$clientLeadSource = $this->leadSource->allLeadSource();
 		$classification = $this->classification->allClassification();
+		$lead_statuses = [0,1,2,3,4,];
+		$prospect_statuses = [5,6,12,13,14,];
+		$prospect2_statuses = [7,8,9,10,11,];
 
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/create', [
@@ -81,7 +82,9 @@ class Leads extends CI_Controller
 			'lead_category_tags' => $lead_category_tags,
 			'leadSources' => $clientLeadSource,
 			'classification' => $classification,
-			'back_url' => $back_url,
+			'lead_statuses' => $lead_statuses,
+			'prospect_statuses' => $prospect_statuses,
+			'prospect2_statuses' => $prospect2_statuses,
 		]);
 		$this->load->view('footer');
 	}
@@ -441,6 +444,9 @@ class Leads extends CI_Controller
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
+			$lead_statuses = [0,1,2,3,4,];
+			$prospect_statuses = [5,6,12,13,14,];
+			$prospect2_statuses = [7,8,9,10,11,];
 
 			$sales_rep = false;
 			if(!empty($lead->sales_rep_id)) {
@@ -468,6 +474,9 @@ class Leads extends CI_Controller
 				'vendors' => $vendors,
 				'materials' => $materials,
 				'sales_rep' => $sales_rep,
+				'lead_statuses' => $lead_statuses,
+				'prospect_statuses' => $prospect_statuses,
+				'prospect2_statuses' => $prospect2_statuses,
 				'next_lead' => $next_lead,
 				'prev_lead' => $prev_lead,
 				'back_url' => $back_url,

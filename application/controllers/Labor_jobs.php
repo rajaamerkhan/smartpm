@@ -61,6 +61,9 @@ class Labor_jobs extends CI_Controller
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
+			$lead_statuses = [0,1,2,3,4,];
+			$prospect_statuses = [5,6,12,13,14,];
+			$prospect2_statuses = [7,8,9,10,11,];
 
 			$sales_rep = false;
 			if(!empty($job->sales_rep_id)) {
@@ -86,6 +89,9 @@ class Labor_jobs extends CI_Controller
 				'items' => $items,
 				'vendors' => $vendors,
 				'materials' => $materials,
+				'lead_statuses' => $lead_statuses,
+				'prospect_statuses' => $prospect_statuses,
+				'prospect2_statuses' => $prospect2_statuses,
 				'sales_rep' => $sales_rep,
 				'next_lead' => $next_lead,
 				'prev_lead' => $prev_lead,

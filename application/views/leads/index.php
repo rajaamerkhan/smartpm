@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="row page-header-buttons">
 		<div class="col-md-6">
 			<?php if($this->uri->segment(3) == 0): ?>
-				<a href="<?= base_url('lead/create?lead_status=' . $this->uri->segment('3')) ?>" class="btn btn-info btn-fill">Create <?php echo isset($subtitle) ? $subtitle : $title; ?></a>
+				<a href="<?= base_url('lead/create') ?>" class="btn btn-info btn-fill">Create <?php echo isset($subtitle) ? $subtitle : $title; ?></a>
 			<?php endif; ?>
 		</div>
 		<div class="col-md-6 text-right-not-xs">
@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				$next_status_class = $next_status !== false ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill';
 				?>
 				<a href="<?= $prev_status_url ?>" class="<?php echo $prev_status_class ?>"><i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp; Prev Status</a>
-				<a href="<?= $next_status_url ?>" class="<?php echo $next_status_class ?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp; Next Status</a>
+				<a href="<?= $next_status_url ?>" class="<?php echo $next_status_class ?>">Next Status&nbsp; <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 			<?php endif; ?>
 		</div>
 	</div>

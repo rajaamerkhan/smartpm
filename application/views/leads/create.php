@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= $back_url; ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
+            <a href="<?= base_url('leads/status/0'); ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
         </div>
     </div>
     <div class="row">
@@ -166,11 +166,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <h4 class="title" style="float: left;">Contract Status<span class="red-mark">*</span></h4>
                                 <div class="clearfix"></div>
                                 <div>
-									<?php
-									$lead_statuses = [0,1,2,3,4,];
-									$prospect_statuses = [5,6,12,13,14,];
-									$prospect2_statuses = [7,8,9,10,11,];
-									?>
                                     <select class="form-control" id="lead" name="status">
                                         <option value="" disabled selected>Select Contract Status</option>
                                         <optgroup label="Leads">

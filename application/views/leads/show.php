@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			$next_lead_class = !empty($next_lead->id) ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill';
 			?>
 			<a href="<?= $prev_lead_url ?>" class="<?php echo $prev_lead_class ?>"><i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp; Prev Lead</a>
-			<a href="<?= $next_lead_url ?>" class="<?php echo $next_lead_class ?>"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp; Next Lead</a>
+			<a href="<?= $next_lead_url ?>" class="<?php echo $next_lead_class ?>">Next Lead &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 		</div>
     </div>
     <div class="row">
@@ -146,16 +146,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= $lead->classification_name ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
+					<?php if(!empty($sales_rep)): ?>
 					<h4 class="title" style="float: left;">Sales Rep</h4>
-					<span class="status" title="<?php echo !empty($sales_rep->email_id) ? $sales_rep->email_id : 'X' ?>">
-						<?php if(!empty($sales_rep)): ?>
+					<span class="status" title="<?php echo !empty($sales_rep->email_id) ? $sales_rep->email_id : '-' ?>">
 						<?php echo "{$sales_rep->first_name} {$sales_rep->last_name}"; ?>
-						<?php else: ?>
-						X
-						<?php endif; ?>
 					</span>
 					<div class="clearfix" style="padding: 10px;"></div>
-
+					<?php endif; ?>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -398,11 +395,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </span>
                     <div class="clearfix"></div>
                     <div class="content">
-						<?php
-						$lead_statuses = [0,1,2,3,4,];
-						$prospect_statuses = [5,6,12,13,14,];
-						$prospect2_statuses = [7,8,9,10,11,];
-						?>
 						<select class="form-control" id="lead" name="status">
 							<option value="" disabled <?= is_null($lead->status) ? 'selected' : '' ?>>Select Contract Status</option>
 							<optgroup label="Leads">
@@ -476,7 +468,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="header">
                     <h4 class="title" style="float: left;">Sales Rep</h4>
                     <span class="status">
-                        <?php echo !empty($sales_rep) ? "{$sales_rep->first_name} {$sales_rep->last_name}" : ''; ?>
+                        <?php echo !empty($sales_rep) ? "{$sales_rep->first_name} {$sales_rep->last_name}" : '-'; ?>
                     </span>
                     <div class="clearfix"></div>
                     <div class="content">
