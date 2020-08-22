@@ -9,9 +9,10 @@ class Completed_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'FinancialModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel']);
+		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'FinancialModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel', 'UserModel']);
 		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
+		$this->user = new UserModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
@@ -44,6 +45,8 @@ class Completed_jobs extends CI_Controller
 
 		$job = $this->lead->getLeadById($jobid);
 		if ($job) {
+			$next_lead = $this->lead->getNextLeadAfterId($job->status, $job->id);
+			$prev_lead = $this->lead->getPreviousLeadAfterId($job->status, $job->id);
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = $this->team_job_track->getTeamName($jobid);
@@ -68,6 +71,11 @@ class Completed_jobs extends CI_Controller
 			$prospect_statuses = [5,6,12,13,14,];
 			$prospect2_statuses = [7,8,9,10,11,];
 
+			$sales_rep = false;
+			if(!empty($job->sales_rep_id)) {
+				$sales_rep = $this->user->getUserById($job->sales_rep_id);
+			}
+
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('completed_jobs/show', [
 				'jobid' => $jobid,
@@ -88,9 +96,12 @@ class Completed_jobs extends CI_Controller
 				'items' => $items,
 				'vendors' => $vendors,
 				'materials' => $materials,
+				'sales_rep' => $sales_rep,
 				'lead_statuses' => $lead_statuses,
 				'prospect_statuses' => $prospect_statuses,
 				'prospect2_statuses' => $prospect2_statuses,
+				'next_lead' => $next_lead,
+				'prev_lead' => $prev_lead,
 			]);
 			$this->load->view('footer');
 		} else {
